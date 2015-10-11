@@ -23,8 +23,16 @@ from accesstokenTwitter import *
 #accesstokenlist.append('clientid','clientsecret','accesstoken','accesssecret')
 def dicOfAccounts():
     dic={}
-    ##Add your dic stuff here. eg,
-    dic['News'] = ['cnn','bbc']
+    dic['News'] = ['cnn','bbc','nytimes']
+    dic['Sports'] =['twittersports','yahoosports','bbcsports']
+    dic['Games']=['videogamenews','videogames','videogameind']
+    dic['Celebrity']=['perezhilton','celebritygossip','HarveyLevinTMZ']
+    dic['Food']=['food','bbcgoodfood','twitterfood']
+    dic['Religious']=['religionnews','huffpostrelig','pontifex']
+    dic['Technology']= ['bbctech','forbestech','techcrunch']
+    dic['Music']=['twittermusic','thedailyswarm','musicnews_facts']
+    dic['Finance']=['efinancialnews','ftfinancenews','telefinance']
+    dic['Political']=['barackobama','BBCpolitics','cnnpolitics']
     return dic
 
 ##Run one time only.
@@ -32,7 +40,22 @@ def makeCSV():
     with open('BTAssignment.csv','w') as f:
         writer = csv.writer(f)
         writer.writerow(["Twitter Account","text","Interest"])
-        
+
+def verifyTwitterAccounts(dic):
+    print('Beginning verification of twitter accounts')
+    error=False
+    errorlist=[]
+    for key,value in dic.items():
+        try:
+            for i in range(len(value)):
+                api.get_user(value[i])
+        except:
+            errorlist.append(value[i])
+            error=True
+    if error == False:
+        print('Error: The following users are private/do not exist :' + str(errorlist))
+    else:
+        return "No errors"       
 """
 PreCond: Takes in a lst of twitter screennames.
 
@@ -43,7 +66,7 @@ Instructions: If you want to start from a specific user, change startFrom from
               0 to the index of the user. Else, just run.
 """
 def extractTweets(dic):
-    currKeyID=0
+    currKeyID=6
     currentKey=accesstokenlist[currKeyID]
     numtoken=len(accesstokenlist)     # Total number of access keys
     auth = tweepy.auth.OAuthHandler(currentKey[0], currentKey[1])
@@ -51,22 +74,7 @@ def extractTweets(dic):
     api = tweepy.API(auth)
     rateID=0
     timeStart=time.time()
-    
-    def verifyTwitterAccounts(dic):
-        print('Beginning verification of twitter accounts')
-        error=False
-        errorlist=[]
-        for key,value in dic.items():
-            try:
-                for i in range(len(value)):
-                    api.get_user(value[i])
-            except:
-                errorlist.append(value[i])
-                error=True
-        if error == False:
-            print('Error: The following users are private/do not exist :' + str(errorlist))
-        else:
-            return "No errors"
+
     
     def changekey():
         nonlocal currKeyID
@@ -109,10 +117,8 @@ def extractTweets(dic):
                 checkRateID()
                 oldest = tweetlst[-1].id - 1
                 
-                counter=3 #get 600 tweets
-                while len(new_tweets) > 0 and counter >0:
+                while len(new_tweets) > 0:
                     checkRateID()
-                    counter-=1
                     rateID-=1
                     new_tweets = api.user_timeline(screen_name = value[i],count=200,max_id=oldest)
                     tweetlst.extend(new_tweets)
