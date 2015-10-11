@@ -23,16 +23,8 @@ from accesstokenTwitter import *
 #accesstokenlist.append('clientid','clientsecret','accesstoken','accesssecret')
 def dicOfAccounts():
     dic={}
+    #eg,
     dic['News'] = ['cnn','bbc','nytimes']
-    dic['Sports'] =['twittersports','yahoosports','bbcsports']
-    dic['Games']=['videogamenews','videogames','videogameind']
-    dic['Celebrity']=['perezhilton','celebritygossip','HarveyLevinTMZ']
-    dic['Food']=['food','bbcgoodfood','twitterfood']
-    dic['Religious']=['religionnews','huffpostrelig','pontifex']
-    dic['Technology']= ['bbctech','forbestech','techcrunch']
-    dic['Music']=['twittermusic','thedailyswarm','musicnews_facts']
-    dic['Finance']=['efinancialnews','ftfinancenews','telefinance']
-    dic['Political']=['barackobama','BBCpolitics','cnnpolitics']
     return dic
 
 ##Run one time only.
