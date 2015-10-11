@@ -5,13 +5,20 @@ Created on Sun Oct 11 12:19:25 2015
 Description:
 
 This script enables one with multiple twitter keys to cycle through them, and make repeated API
-requests to extract the tweets of different users into CSV files.
+requests to extract the tweets of different users into a nice CSV file.
+
+Instructions:
+1) Run makeCSV
+2) Edit dicOfAccounts with key = category, values = list of accounts to mine.
+Example is given.
+3) (Optional) Run verifyTwitterAccounts to verify the twitter accounts given.
+4) Run extractTweets.
 
 @author: Thiru
 """
 
 import time,tweepy,csv
-from accesstokenTwitter import *
+#from accesstokenTwitter import *
 
 #Uncomment above if you have a config file with a lst
 #of accesstokens, else, add manually below in the form of
@@ -35,6 +42,11 @@ def makeCSV():
 
 def verifyTwitterAccounts(dic):
     print('Beginning verification of twitter accounts')
+    currKeyID=0
+    currentKey=accesstokenlist[currKeyID]
+    auth = tweepy.auth.OAuthHandler(currentKey[0], currentKey[1])
+    auth.set_access_token(currentKey[2], currentKey[3])
+    api = tweepy.API(auth)
     error=False
     errorlist=[]
     for key,value in dic.items():
@@ -47,18 +59,17 @@ def verifyTwitterAccounts(dic):
     if error == False:
         print('Error: The following users are private/do not exist :' + str(errorlist))
     else:
-        return "No errors"       
+        return "No errors"
+
+    
 """
-PreCond: Takes in a lst of twitter screennames.
+PreCond: Takes in a dic of category:[twitternames]
 
-Description: Writes CSV's of the user's latest 3.2k tweets in utf-8 format.
-            one CSV per user.
+Description: Writes CSV of the each accounts latest 3.2k tweets in utf-8 format.
 
-Instructions: If you want to start from a specific user, change startFrom from
-              0 to the index of the user. Else, just run.
 """
 def extractTweets(dic):
-    currKeyID=6
+    currKeyID=0
     currentKey=accesstokenlist[currKeyID]
     numtoken=len(accesstokenlist)     # Total number of access keys
     auth = tweepy.auth.OAuthHandler(currentKey[0], currentKey[1])
@@ -66,7 +77,6 @@ def extractTweets(dic):
     api = tweepy.API(auth)
     rateID=0
     timeStart=time.time()
-
     
     def changekey():
         nonlocal currKeyID
