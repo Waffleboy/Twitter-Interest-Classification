@@ -8,11 +8,20 @@ This script enables one with multiple twitter keys to cycle through them, and ma
 requests to extract the tweets of different users into a nice CSV file.
 
 Instructions:
-1) Run makeCSV
-2) Edit dicOfAccounts with key = category, values = list of accounts to mine.
-Example is given.
+
+***If first time running***:
+
+1) Edit dicOfAccounts() with Key = Category, Values = List of twitter accounts to mine
+Examples are given.
+2)Follow instructions to add your twitter API test keys below! uncomment out accesstokenlist and add
+all the keys you have
 3) (Optional) Run verifyTwitterAccounts to verify the twitter accounts given.
-4) Run extractTweets.
+
+Press F5 and just run. Youll get a BTAssignment.csv in your python folder
+
+**If >1 time running*
+If you want to recreate the CSV, treat it as first time running. else, you have to comment out
+make csv in the last line (just run again luh honestly)
 
 @author: Thiru
 """
@@ -21,17 +30,21 @@ import time,tweepy,csv
 #from accesstokenTwitter import *
 
 #Uncomment above if you have a config file with a lst
-#of accesstokens, else, add manually below in the form of
+#of accesstokens,
+#else:
+#add manually below in the form of
 # ClientID/ Client Secret/ Access Token / Access Secret
 
 #Eg,
 
 #accesstokenlist=[]
-#accesstokenlist.append('clientid','clientsecret','accesstoken','accesssecret')
+#accesstokenlist.append(['clientid','clientsecret','accesstoken','accesssecret'])
+
 def dicOfAccounts():
     dic={}
     #eg,
     dic['News'] = ['cnn','bbc','nytimes']
+    dic['Politics']=['barackobama']
     return dic
 
 ##Run one time only.
