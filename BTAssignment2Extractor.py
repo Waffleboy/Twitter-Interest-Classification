@@ -26,7 +26,7 @@ make csv in the last line (just run again luh honestly)
 @author: Thiru
 """
 
-import time,tweepy,csv
+import time,tweepy,csv,random
 #from accesstokenTwitter import *
 
 #Uncomment above if you have a config file with a lst
@@ -119,7 +119,31 @@ def extractTweets(dic):
                     print('RateID Exhausted, sleeping for rate reset. Key: '+str(currKeyID)) 
                     time.sleep(905 - timeDifference)
                     timeStart = time.time()
-                 
+                    
+    def removeLinksAndLastCharacter(lst):
+        lst=[lst[0]]+lst[2:]
+        for i in range(1,len(lst)):
+            text = lst[i][1]
+            x = text.find('http')
+            while x != -1:
+                text = lst[i][1][:x] + lst[i][1][x+22:]
+                lst[i][1] = text
+                x = text.find('http')
+            lst[i][1]=lst[i][1][:-1]
+            lst[i][1]=lst[i][1][2:]
+        return lst
+    
+    def shuffleList(lst):
+        header=[lst[0]]
+        lst=lst[1:]
+        random.shuffle(lst)
+        random.shuffle(lst)
+        random.shuffle(lst)
+        random.shuffle(lst)
+        random.shuffle(lst)
+        finallst = header + lst
+        return finallst
+    
     for key,value in dic.items():
         try:
             print('Currently processing topic: '+str(key))
@@ -148,6 +172,23 @@ def extractTweets(dic):
         except Exception as e:
             print(e, 'Error occured while processing '+key + '' + str(value) + '' + 'Skipping!')
             print('Currently using key: '+str(currKeyID))
+    print('Done with extraction, now removing links and last hyphen from CSV.')
+    
+    with open('BTAssignment.csv','r') as f:
+        reader = csv.reader(f)
+        lst=list(reader)
+  
+    
+    ##Remove links, first b' and last '
+    lst = removeLinksAndLastCharacter(lst)
+    #Shuffle the CSV
+    print('Shuffling CSV')
+    lst = shuffleList(lst)
+    print('Shuffling completed! Writing to CSV.')
+    with open('BTAssignmentProcessed.csv','w',newline='') as f:
+        writer = csv.writer(f)
+        writer.writerows(lst)
+    print('BTAssignmentProcessed.csv is now ready for use')
 
 makeCSV()
 dic = dicOfAccounts()
