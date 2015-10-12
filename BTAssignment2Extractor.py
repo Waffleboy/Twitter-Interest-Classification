@@ -124,6 +124,7 @@ def extractTweets(dic):
         lst=[lst[0]]+lst[2:]
         for i in range(1,len(lst)):
             text = lst[i][1]
+            text=text.lower()
             x = text.find('http')
             while x != -1:
                 text = lst[i][1][:x] + lst[i][1][x+22:]
