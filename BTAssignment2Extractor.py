@@ -23,7 +23,7 @@ Press F5 and just run. Youll get a BTAssignment.csv in your python folder
 If you want to recreate the CSV, treat it as first time running. else, you have to comment out
 make csv in the last line (just run again luh honestly)
 
-@author: Thiru 
+@author: Thiru
 """
 
 import time,tweepy,csv,random
