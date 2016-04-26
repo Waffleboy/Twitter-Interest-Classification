@@ -2,28 +2,7 @@
 """
 Created on Sun Oct 11 12:19:25 2015
 
-Description:
-
-This script enables one with multiple twitter keys to cycle through them, and make repeated API
-requests to extract the tweets of different users into a nice CSV file.
-
-Instructions:
-
-***If first time running***:
-
-1) Edit dicOfAccounts() with Key = Category, Values = List of twitter accounts to mine
-Examples are given.
-2)Follow instructions to add your twitter API test keys below! uncomment out accesstokenlist and add
-all the keys you have
-3) (Optional) Run verifyTwitterAccounts to verify the twitter accounts given.
-
-Press F5 and just run. Youll get a BTAssignment.csv in your python folder
-
-**If >1 time running*
-If you want to recreate the CSV, treat it as first time running. else, you have to comment out
-make csv in the last line (just run again luh honestly)
-
-@author: Thiru
+@author: Waffleboy
 """
 
 import time,tweepy,csv,random
@@ -49,7 +28,7 @@ def dicOfAccounts():
 
 ##Run one time only.
 def makeCSV():
-    with open('BTAssignment.csv','w') as f:
+    with open('twitterInterests.csv','w') as f:
         writer = csv.writer(f)
         writer.writerow(["Twitter Account","text","Interest"])
 
@@ -175,7 +154,7 @@ def extractTweets(dic):
             print('Currently using key: '+str(currKeyID))
     print('Done with extraction, now removing links and last hyphen from CSV.')
     
-    with open('BTAssignment.csv','r') as f:
+    with open('twitterInterests.csv','r') as f:
         reader = csv.reader(f)
         lst=list(reader)
   
@@ -186,11 +165,12 @@ def extractTweets(dic):
     print('Shuffling CSV')
     lst = shuffleList(lst)
     print('Shuffling completed! Writing to CSV.')
-    with open('BTAssignmentProcessed.csv','w',newline='') as f:
+    with open('twitterInterestsProcessed.csv','w',newline='') as f:
         writer = csv.writer(f)
         writer.writerows(lst)
-    print('BTAssignmentProcessed.csv is now ready for use')
+    print('twitterInterestsProcessed.csv is now ready for use')
 
-makeCSV()
-dic = dicOfAccounts()
-extractTweets(dic)
+if __name__ == '__main__':
+    makeCSV()
+    dic = dicOfAccounts()
+    extractTweets(dic)
