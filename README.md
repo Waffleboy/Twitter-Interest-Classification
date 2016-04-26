@@ -8,6 +8,10 @@ Output:
 
 2)A processed CSV file of the above.
 
+# Requirements
+
+tweepy
+
 # Instructions:
 
 1) Edit the dicOfAccounts() function with inputs where Key = interest, Values = List of twitter accounts to mine
