@@ -4,7 +4,7 @@ This script generates a dataset for classification of twitter interests. It has 
 
 Output: 
 
-1)A CSV file of tweets / interest
+1)A CSV file of accountName / tweets / interest
 
 2)A processed CSV file of the above.
 
