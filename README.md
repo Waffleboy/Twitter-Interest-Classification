@@ -1,10 +1,11 @@
 # Dataset Generator for Classifying Twitter Interests
 
-This script generates a dataset for classification of twitter interests. It has the ability to use multiple twitter keys to speed up the process. 
+This script generates a dataset for classification of twitter interests. It has the ability to use multiple twitter API keys to speed up the process. 
 
 Output: 
 
 1)A CSV file of tweets / interest
+
 2)A processed CSV file of the above.
 
 # Instructions:
